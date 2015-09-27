@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>
+<html lang="en" ng-app="myApp" class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en" ng-app="myApp" class="no-js"> <!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>My AngularJS App</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body ng-controller="myAppController as myAppCtrl">
+<div id="administracion-noticias">
+
+    <button ng-click="myAppCtrl.fuckFacebook();">Fuck Facebook</button>
+    <button ng-click="myAppCtrl.fuckLogout();">Logout</button>
+
+    <div class="administracion-sub-title">Cargar noticias</div>
+
+    <div class="administracion-renglon">
+
+        <div class="administracion-input">
+
+            <span>Titulo:</span>
+
+            <input id="noticia-titulo" type="text" ng-model="myAppCtrl.noticia.titulo">
+
+        </div>
+
+        <div class="administracion-input">
+
+            <span>Tipo (Noticia u evento):</span>
+
+            <select name="" id="noticia-tipo" ng-model="myAppCtrl.noticia.tipo">
+                <option value="0">Noticia</option>
+                <option value="1">Evento</option>
+            </select>
+
+        </div>
+
+
+        <fieldset class="administracion-input">
+
+            <span>Fecha:</span>
+
+            <input type="date" id="noticia-fecha" ng-model="myAppCtrl.noticia.fecha">
+
+        </fieldset>
+        <div class="administracion-fotos">
+
+            <div class="administracion-foto">
+
+                <span>Foto 1:</span>
+
+
+                <div id="noticia-foto" class="input-foto">
+                    <img ng-src="{{'img/'+myAppCtrl.fotoNoticia01.name}}" alt="">
+                    <input type="file" name="images" id="images"
+                           data-dbinf-on-files-selected-noticias="myAppCtrl.agregarImagenNoticia(selectedFileList,1)"/>
+                </div>
+
+            </div>
+
+            <div class="administracion-foto" ng-if="myAppCtrl.noticia.tipo == 0;">
+
+                <span>Foto 2:</span>
+
+
+                <div class="input-foto">
+                    <img ng-src="{{'img/'+myAppCtrl.fotoNoticia02.name}}" alt="">
+                    <input type="file" name="images" id="images"
+                           data-dbinf-on-files-selected-noticias="myAppCtrl.agregarImagenNoticia(selectedFileList,2)"/>
+                </div>
+
+            </div>
+
+            <div class="administracion-foto" ng-if="myAppCtrl.noticia.tipo == 0;">
+
+                <span>Foto 3:</span>
+
+
+                <div class="input-foto">
+                    <img ng-src="{{'img/'+myAppCtrl.fotoNoticia03.name}}" alt="">
+                    <input type="file" name="images" id="images"
+                           data-dbinf-on-files-selected-noticias="myAppCtrl.agregarImagenNoticia(selectedFileList,3)"/>
+                </div>
+
+            </div>
+
+            <div class="administracion-foto" ng-if="myAppCtrl.noticia.tipo == 0;">
+
+                <span>Foto 4:</span>
+
+
+                <div class="input-foto">
+                    <img ng-src="{{'img/'+myAppCtrl.fotoNoticia04.name}}" alt="">
+                    <input type="file" name="images" id="images"
+                           data-dbinf-on-files-selected-noticias="myAppCtrl.agregarImagenNoticia(selectedFileList,4)"/>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="administracion-input">
+
+        <span>Descripción:</span>
+
+        <textarea id="noticia-detalles" ng-model="myAppCtrl.noticia.detalles"></textarea>
+
+    </div>
+
+    <div class="administracion-button-bar">
+
+        <button ng-click="myAppCtrl.saveNoticia();">GUARDAR</button>
+        <button ng-click="myAppCtrl.removeNoticia();">BORRAR</button>
+        <button ng-click="myAppCtrl.resetNoticia();">CANCELAR</button>
+
+    </div>
+
+
+    <div id="administracion-noticias-listado">
+
+        <table id="administracion-noticias-tabla" class="table table-striped" style="width: 100%">
+
+            <thead>
+            <tr>
+                <th>Fecha:</th>
+                <th>Titulo:</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="row in myAppCtrl.noticias"
+                ng-click="myAppCtrl.modificarNoticia(row);"
+                ng-class="{'tr-selected': row.noticia_id == myAppCtrl.noticia.noticia_id}"
+                class="administracion-row">
+                <td class="">{{row.fecha | date}}</td>
+                <td class="">{{row.titulo}}</td>
+            </tr>
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+
+
+<!-- In production use:
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
+-->
+<script src="bower_components/angular/angular.js"></script>
+<script src="bower_components/angular-route/angular-route.js"></script>
+<!--<script src='http://connect.facebook.net/en_US/all.js'></script>-->
+<script src="ac-noticias.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
