@@ -4,16 +4,16 @@
     var currentScriptPath = scripts[scripts.length - 1].src;
     angular.module('myApp', [
         'ngRoute',
+        'acUtils',
         'ac.noticias'
-    ]).
-        config(['$routeProvider', function ($routeProvider) {
+    ]).config(['$routeProvider', function ($routeProvider) {
             $routeProvider.otherwise({redirectTo: '/view1'});
         }])
         .controller('myAppController', myAppController);
 
 
-    myAppController.$inject = ['$scope', 'NoticiasService', '$http'];
-    function myAppController($scope, NoticiasService, $http) {
+    myAppController.$inject = ['$scope', 'NoticiasService', '$http', 'AcUtilsService'];
+    function myAppController($scope, NoticiasService, $http, AcUtilsService) {
 
         var vm = this;
         vm.agregarImagenNoticia = agregarImagenNoticia;
@@ -98,18 +98,6 @@
             var page_access_token = "1634953146778968|ce5mxHmTk1Jsh1s_2A_YdvLbH1Y";
 
 
-            //return $http.get('fuckfacebook.php')
-            //    .success(function(data){
-            //        console.log(data);
-            //    })
-            //    .error(function(data){
-            //        console.log(data);
-            //    });
-
-
-            //https://graph.facebook.com/oauth/access_token?client_id=1634953146778968&redirect_uri=http://192.185.67.199/~arielces/ac-generador-noticias/&client_secret=9aa610301779bf45c2050d7d6d3ce24a&code=AQD_Bq5wku7QVGKiso8QeI1VN-X5g7502iNJhLVTwGe7kUuE91eaXFHAO84CxxuLxqNTc0hGgFgtJukIVzAd2_cfkrd0-vJnDVjNILRdo6GE9K4fSZuKP6uqSh6_pvq0KCHdV2ywGSlMcBVJG0nWMYXhQsCxJaGIP2zyW4l-Kmtccqhjmrc7xuHH58WMBiiu0-o2rObqCCJh25qaIxeKNNWXPcMgA8sdCDAtTTwFZBXhmPP-v_w_s6X2Cf8s3yVZI46bXK2ohxEY_r4a7q_r91kEd8KJSs0qQuKxIz7piKod3NcfiOUPneDn-cgOoK7Emhxj72MMDgUKZl-p9v9zTBLv
-
-
             FB.getLoginStatus(function (response) {
                 console.log(response);
                 if (response.authResponse == undefined) {
@@ -128,13 +116,13 @@
                     //response = FB.get("/acdesarrollos/feed", page_access_token);
                     FB.api(page_id + '/feed', 'post',
                         {
-                            message: 'prueba', // Mensaje Arriba de la noticia
+                            message: vm.noticia.subtitulo, // Mensaje Arriba de la noticia
                             access_token: access_token,
                             'name': vm.noticia.titulo, // Titulo Noticia
-                            'link': 'ac-desarrollos.com',
-                            'description': vm.noticia.detalles, // Descripción noticia
+                            'link': vm.noticia.link,
+                            'description': vm.noticia.detalles, // Descripciï¿½n noticia
                             'caption': 'AC Desarrollos',
-                            'picture': '',
+                            'picture': 'http://192.185.67.199/~arielces/ac-generador-noticias/img/' + vm.fotoNoticia01.name,
                             'published': true
 
 
@@ -221,18 +209,18 @@
             }
 
             if (vm.noticia.titulo.trim().length == 0) {
-                AcUtilsService.validations('noticia-titulo', 'El título es obligatorio');
+                AcUtilsService.validations('noticia-titulo', 'El tï¿½tulo es obligatorio');
                 conErrores = true;
             }
 
 
             if (vm.noticia.detalles.trim().length == 0) {
-                AcUtilsService.validations('noticia-detalles', 'La descripción es obligatoria');
+                AcUtilsService.validations('noticia-detalles', 'La descripciï¿½n es obligatoria');
                 conErrores = true;
             }
 
             if (vm.noticia.fecha == undefined) {
-                AcUtilsService.validations('noticia-fecha', 'La fecha no es válida');
+                AcUtilsService.validations('noticia-fecha', 'La fecha no es vï¿½lida');
                 conErrores = true;
             }
 
@@ -267,40 +255,36 @@
                 vm.noticia.fotos.push(foto);
             }
 
-            fuckFacebook(function(data){
+            //fuckFacebook(function (data) {
+            //
+            //    console.log(data);
+            //
+            //    if (data.id == undefined) {
+            //        var r = confirm('La noticia no se ha podido cargar en facebook. Desea continuar?');
+            //        if (!r) {
+            //            return;
+            //        }
+            //    }
 
-                if(data.id == undefined){
-                    var r = confirm('La noticia no se ha podido cargar en facebook. Desea continuar?');
-                    if(!r){
-                        return;
-                    }
-                }
 
+            if (vm.noticia.noticia_id == -1) {
+                NoticiasService.save(vm.noticia, 'saveNoticia', function (data) {
+                    resetNoticia();
+                    NoticiasService.getNoticias(function (data) {
+                        vm.noticias = data;
 
-
-                if (vm.noticia.noticia_id == -1) {
-                    NoticiasService.save(vm.noticia, 'saveNoticia', function (data) {
-                        resetNoticia();
-                        NoticiasService.getNoticias(function (data) {
-                            vm.noticias = data;
-
-                        });
                     });
-                } else {
-                    NoticiasService.save(vm.noticia, 'updateNoticia', function (data) {
-                        resetNoticia();
-                        NoticiasService.getNoticias(function (data) {
-                            vm.noticias = data;
-                        });
+                });
+            } else {
+                NoticiasService.save(vm.noticia, 'updateNoticia', function (data) {
+                    resetNoticia();
+                    NoticiasService.getNoticias(function (data) {
+                        vm.noticias = data;
                     });
-                }
+                });
+            }
 
-            });
-
-
-
-
-
+            //});
 
 
         }

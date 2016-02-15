@@ -35,6 +35,22 @@
 
         <div class="administracion-input">
 
+            <span>Subtitulo:</span>
+
+            <input id="noticia-subtitulo" type="text" ng-model="myAppCtrl.noticia.subtitulo">
+
+        </div>
+
+        <div class="administracion-input">
+
+            <span>Link:</span>
+
+            <input id="noticia-link" type="text" ng-model="myAppCtrl.noticia.link">
+
+        </div>
+
+        <div class="administracion-input">
+
             <span>Tipo (Noticia u evento):</span>
 
             <select name="" id="noticia-tipo" ng-model="myAppCtrl.noticia.tipo">
@@ -160,6 +176,7 @@
 <script src="bower_components/angular-route/angular-route.js"></script>
 <!--<script src='http://connect.facebook.net/en_US/all.js'></script>-->
 <script src="ac-noticias.js"></script>
+<script src="utils/utils.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
