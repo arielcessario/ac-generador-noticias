@@ -255,6 +255,7 @@
                 vm.noticia.fotos.push(foto);
             }
 
+
             //fuckFacebook(function (data) {
             //
             //    console.log(data);
