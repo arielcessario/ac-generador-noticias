@@ -4,6 +4,7 @@
     var currentScriptPath = scripts[scripts.length - 1].src;
     angular.module('myApp', [
         'ngRoute',
+        'textAngular',
         'acUtils',
         'ac.noticias'
     ]).config(['$routeProvider', function ($routeProvider) {

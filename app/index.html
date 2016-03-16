@@ -13,7 +13,13 @@
     <title>My AngularJS App</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="app.css">
+    <style>
+        .form-control, .ta-bind{
+            min-height: 400px;
+        }
+    </style>
 </head>
 <body ng-controller="myAppController as myAppCtrl">
 <div id="administracion-noticias">
@@ -130,7 +136,8 @@
 
         <span>Descripción:</span>
 
-        <textarea id="noticia-detalles" ng-model="myAppCtrl.noticia.detalles"></textarea>
+        <!--<textarea id="noticia-detalles" ng-model="myAppCtrl.noticia.detalles"></textarea>-->
+        <div id="noticia-detalles" style="min-height: 400px;" text-angular ng-model="myAppCtrl.noticia.detalles"></div>
 
     </div>
 
@@ -174,6 +181,9 @@
 -->
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-route/angular-route.js"></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.0/textAngular-rangy.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.0/textAngular-sanitize.min.js'></script>
+<script src='//cdnjs.cloudflare.com/ajax/libs/textAngular/1.5.0/textAngular.min.js'></script>
 <!--<script src='http://connect.facebook.net/en_US/all.js'></script>-->
 <script src="ac-noticias.js"></script>
 <script src="utils/utils.js"></script>
